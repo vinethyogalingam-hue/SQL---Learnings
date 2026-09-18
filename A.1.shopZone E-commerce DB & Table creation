@@ -59,4 +59,208 @@ RENAME TABLE ShopZone.order_items TO ShopZone.order_details;
 
 USE ShopZone;
 
+ALTER TABLE orders
+ADD CONSTRAINT fk_orders_customer
+FOREIGN KEY (customer_id)
+REFERENCES customers(customer_id);
+
+INSERT INTO ShopZone.customers VALUES( 101 ,'Arun' ,'Kumar', 'arun@gmail.com' , 9876543210 ,'Chennai','2026-01-10','2026-01-10');
+
+USE ShopZone;
+
+INSERT INTO customers
+(
+    customer_id,
+    first_name,
+    last_name,
+    email,
+    phone,
+    city,
+    registration_date,
+    date_of_birth
+)
+VALUES
+(102, 'Ravi',    'Kumar',  'ravi@gmail.com',    '9876543211', 'Madurai',    '2026-01-15', '1995-08-20'),
+(103, 'Priya',   'Sharma', 'priya@gmail.com',  '9876543212', 'Coimbatore', '2026-02-05', '1998-03-12'),
+(104, 'Karthik', 'Raj',    'karthik@gmail.com', '9876543213', 'Chennai',    '2026-02-18', '1996-11-25'),
+(105, 'Divya',   'Kumar',  'divya@gmail.com',   '9876543214', 'Trichy',     '2026-03-01', '1999-07-10'),
+(106, 'Suresh',  'Babu',   'suresh@gmail.com',  '9876543215', 'Salem',      '2026-03-05', '1994-01-18'),
+(107, 'Meena',   'Devi',   'meena@gmail.com',   '9876543216', 'Chennai',    '2026-03-12', '1997-09-05'),
+(108, 'Ajay',    'Kumar',  'ajay@gmail.com',    '9876543217', 'Bangalore',  '2026-03-20', '1996-06-22'),
+(109, 'Sneha',   'Raj',    'sneha@gmail.com',   '9876543218', 'Madurai',    '2026-04-02', '1998-12-30'),
+(110, 'Vijay',   'Anand',  'vijay@gmail.com',   '9876543219', 'Chennai',    '2026-04-10', '1995-04-08');
+
+SELECT * FROM customers;
+
+
+UPDATE customers
+SET city = 'Banglore'
+WHERE customer_id = 101;
+
+UPDATE customers
+SET city ='Chennai', 
+    phone = 9999999999
+WHERE customer_id =102;
+
+USE ShopZone;
+
+INSERT INTO products
+(
+    product_id,
+    product_name,
+    category,
+    price,
+    stock_quantity,
+    supplier_name
+)
+VALUES
+(201, 'Laptop',       'Electronics', 65000.00, 10, 'Dell'),
+(202, 'Mouse',        'Electronics', 1200.00,  50, 'Logitech'),
+(203, 'Keyboard',     'Electronics', 2500.00,  30, 'HP'),
+(204, 'Office Chair', 'Furniture',   8500.00,  15, 'Featherlite'),
+(205, 'Desk',         'Furniture',   12000.00, 8, 'IKEA'),
+(206, 'Monitor',      'Electronics', 18000.00, 20, 'Samsung'),
+(207, 'Headphones',   'Electronics', 3500.00,  25, 'Sony'),
+(208, 'Bookshelf',    'Furniture',   7000.00,  12, 'IKEA'),
+(209, 'Webcam',       'Electronics', 4500.00,  18, 'Logitech'),
+(210, 'Desk Lamp',    'Furniture',   1800.00,  40, 'Philips');
+
+SELECT * FROM products;
+
+
+INSERT INTO ShopZone.orders
+(
+    order_id,
+    customer_id,
+    order_date,
+    order_status,
+    total_amount
+)
+VALUES
+(1001, 101, '2026-01-12', 'Delivered',  66200.00),
+(1002, 102, '2026-01-18', 'Shipped',     1200.00),
+(1003, 103, '2026-02-08', 'Delivered',  15500.00),
+(1004, 104, '2026-02-20', 'Processing', 65000.00),
+(1005, 105, '2026-03-03', 'Delivered',   3500.00),
+(1006, 106, '2026-03-07', 'Shipped',    18000.00),
+(1007, 107, '2026-03-15', 'Delivered',   9500.00),
+(1008, 108, '2026-03-22', 'Processing',  4500.00),
+(1009, 109, '2026-04-05', 'Delivered',  13800.00),
+(1010, 110, '2026-04-12', 'Shipped',     7000.00),
+(1011, 101, '2026-04-15', 'Delivered',  12000.00),
+(1012, 102, '2026-04-18', 'Cancelled',  65000.00),
+(1013, 103, '2026-04-20', 'Delivered',   2500.00),
+(1014, 104, '2026-04-22', 'Shipped',    21000.00),
+(1015, 105, '2026-04-25', 'Delivered',  12000.00),
+(1016, 106, '2026-05-01', 'Processing',  8500.00),
+(1017, 107, '2026-05-05', 'Delivered',   3500.00),
+(1018, 108, '2026-05-10', 'Shipped',    18000.00),
+(1019, 109, '2026-05-15', 'Delivered',   2500.00),
+(1020, 110, '2026-05-20', 'Processing',  8800.00);
+
+
+
+
+INSERT INTO ShopZone.order_details
+(
+    order_item_id,
+    order_id,
+    product_id,
+    quantity,
+    unit_price
+)
+VALUES
+(1,  1001, 201, 1, 65000.00),
+(2,  1001, 202, 1, 1200.00),
+
+(3,  1002, 202, 1, 1200.00),
+
+(4,  1003, 204, 1, 8500.00),
+(5,  1003, 210, 2, 1800.00),
+
+(6,  1004, 201, 1, 65000.00),
+
+(7,  1005, 207, 1, 3500.00),
+
+(8,  1006, 206, 1, 18000.00),
+
+(9,  1007, 204, 1, 8500.00),
+(10, 1007, 210, 1, 1800.00),
+
+(11, 1008, 209, 1, 4500.00),
+
+(12, 1009, 205, 1, 12000.00),
+(13, 1009, 210, 1, 1800.00),
+
+(14, 1010, 208, 1, 7000.00),
+
+(15, 1011, 205, 1, 12000.00),
+
+(16, 1012, 201, 1, 65000.00),
+
+(17, 1013, 203, 1, 2500.00),
+
+(18, 1014, 206, 1, 18000.00),
+(19, 1014, 202, 1, 1200.00),
+(20, 1014, 210, 1, 1800.00),
+
+(21, 1015, 205, 1, 12000.00),
+
+(22, 1016, 204, 1, 8500.00),
+
+(23, 1017, 207, 1, 3500.00),
+
+(24, 1018, 206, 1, 18000.00),
+
+(25, 1019, 203, 1, 2500.00),
+
+(26, 1020, 208, 1, 7000.00),
+(27, 1020, 210, 1, 1800.00);
+
+CREATE TABLE ShopZone.payments
+(
+    payment_id INT PRIMARY KEY,
+    order_id INT,
+    payment_date DATE,
+    payment_method VARCHAR(30),
+    payment_amount DECIMAL(12,2),
+    payment_status VARCHAR(20),
+
+    FOREIGN KEY (order_id)
+        REFERENCES ShopZone.orders(order_id)
+);
+
+INSERT INTO ShopZone.payments
+(
+    payment_id,
+    order_id,
+    payment_date,
+    payment_method,
+    payment_amount,
+    payment_status
+)
+VALUES
+(5001, 1001, '2026-01-12', 'Credit Card', 66200.00, 'Completed'),
+(5002, 1002, '2026-01-18', 'UPI',          1200.00, 'Completed'),
+(5003, 1003, '2026-02-08', 'Debit Card',  15500.00, 'Completed'),
+(5004, 1004, '2026-02-20', 'Credit Card', 65000.00, 'Completed'),
+(5005, 1005, '2026-03-03', 'UPI',          3500.00, 'Completed'),
+(5006, 1006, '2026-03-07', 'Net Banking', 18000.00, 'Completed'),
+(5007, 1007, '2026-03-15', 'UPI',          9500.00, 'Completed'),
+(5008, 1008, '2026-03-22', 'Credit Card',  4500.00, 'Completed'),
+(5009, 1009, '2026-04-05', 'Debit Card',  13800.00, 'Completed'),
+(5010, 1010, '2026-04-12', 'UPI',          7000.00, 'Completed'),
+(5011, 1011, '2026-04-15', 'Credit Card', 12000.00, 'Completed'),
+(5012, 1012, '2026-04-18', 'Credit Card', 65000.00, 'Refunded'),
+(5013, 1013, '2026-04-20', 'UPI',          2500.00, 'Completed'),
+(5014, 1014, '2026-04-22', 'Debit Card',  21000.00, 'Completed'),
+(5015, 1015, '2026-04-25', 'UPI',         12000.00, 'Completed'),
+(5016, 1016, '2026-05-01', 'Net Banking',  8500.00, 'Completed'),
+(5017, 1017, '2026-05-05', 'UPI',          3500.00, 'Completed'),
+(5018, 1018, '2026-05-10', 'Credit Card', 18000.00, 'Completed'),
+(5019, 1019, '2026-05-15', 'UPI',          2500.00, 'Completed'),
+(5020, 1020, '2026-05-20', 'Debit Card',   8800.00, 'Pending');
+
+
+
 SELECT * FROM ShopZone.customers;                
