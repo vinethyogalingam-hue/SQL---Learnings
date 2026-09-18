@@ -1,0 +1,155 @@
+UPDATE customers
+SET city = 'Banglore'
+WHERE customer_id = 101;
+
+UPDATE customers
+SET city ='Chennai', 
+    phone = 9999999999
+WHERE customer_id =102;
+
+SELECT *
+FROM products;
+
+SET SQL_SAFE_UPDATES = 0;
+
+USE ShopZOne;
+UPDATE products 
+SET price = price + ((price*10)/100)
+WHERE category = 'Electronics';
+
+UPDATE products
+SET stock_quantity = stock_quantity+20
+WHERE product_id = 201;
+
+UPDATE products
+SET stock_quantity = stock_quantity+5
+WHERE category = 'Furniture';
+
+
+/*
+For all Electronics products:
+Increase the price by 5%
+BUT only update products whose current price is greater than 5,000.
+*/
+
+UPDATE products
+SET price = price + ((price*5)/100)
+WHERE category = 'Electronics' AND price > 5000;
+
+/*
+city → Coimbatore
+phone → 8888888888
+
+But there is an additional requirement:
+
+Update the customer only if their current city is Chennai.
+*/
+
+UPDATE customers
+SET city='Coimbatore',
+	phone ='8888888888'
+WHERE customer_id = 104;
+
+/*
+For all Furniture products:
+
+Increase the price by 15%.
+*/
+
+UPDATE products
+SET price = price + ((price*15)/100)
+WHERE category = 'Furniture';
+
+SELECT * FROM products;
+
+SELECT product_id,
+       product_name,
+       price
+FROM products
+WHERE category = 'Furniture';
+
+UPDATE products
+SET price = 8500.00
+WHERE product_name ='Office Chair';
+
+UPDATE products
+SET price = 12000.00
+WHERE product_name ='Desk';
+
+UPDATE products
+SET price = 7000.00
+WHERE product_name ='Bookshelf';
+
+UPDATE products
+SET price = 1800.00
+WHERE product_name ='Desk Lamp';
+
+/*
+For Electronics products:
+
+If stock_quantity < 20 → increase stock by 10
+If stock_quantity >= 20 → increase stock by 5
+
+Use one UPDATE statement.
+
+*/
+
+
+UPDATE products
+SET stock_quantity = CASE
+        WHEN stock_quantity<20 THEN stock_quantity+10
+        WHEN stock_quantity>=20 THEN stock_quantity+5
+	END
+WHERE category = 'Electronics';
+
+
+/*
+
+Update product prices based on both category and current price:
+
+For Electronics:
+
+Price < 5,000 → increase by 5%
+Price >= 5,000 → increase by 10%
+
+For Furniture:
+
+Price < 5,000 → increase by 8%
+Price >= 5,000 → increase by 12%
+*/
+
+SELECT * FROM products;
+UPDATE products
+SET price = CASE 
+            WHEN category = 'Electronics' AND price<5000 THEN price+((price*5)/100)
+            WHEN category = 'Electronics' AND price>=5000 THEN price+((price*10)/100)
+			WHEN category = 'Furniture' AND price<5000 THEN price+((price*8)/100)
+            WHEN category = 'Furniture' AND price>=5000 THEN price+((price*12)/100)
+            END
+WHERE category = 'Electronics' OR category = 'Furniture';
+
+SELECT * FROM products;
+UPDATE products
+SET price = CASE 
+			WHEN category = 'Furniture' AND price<5000 THEN price+((price*8)/100)
+            WHEN category = 'Furniture' AND price>=5000 THEN price+((price*12)/100)
+            END
+WHERE category = 'Electronics' OR category = 'Furniture';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
